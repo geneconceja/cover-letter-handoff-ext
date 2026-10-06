@@ -2,6 +2,7 @@ const PROVIDERS = {
   claude:     { name: "Claude",     url: "https://claude.ai/new" },
   chatgpt:    { name: "ChatGPT",    url: "https://chatgpt.com/" },
   gemini:     { name: "Gemini",     url: "https://gemini.google.com/app" },
+  deepseek:   { name: "DeepSeek",   url: "https://chat.deepseek.com/" },
   perplexity: { name: "Perplexity", url: "https://www.perplexity.ai/" }
 };
 
