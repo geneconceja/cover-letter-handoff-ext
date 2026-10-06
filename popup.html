@@ -3,24 +3,147 @@
 <head>
   <meta charset="utf-8">
   <style>
-    body { font-family: system-ui, sans-serif; width: 280px; padding: 12px; margin: 0; }
-    h3 { margin: 0 0 10px; font-size: 16px; }
-    button { width: 100%; padding: 9px; margin: 4px 0; cursor: pointer; border-radius: 4px; border: 1px solid #ccc; font-size: 13px; }
-    .btn-provider { background: #f8fafc; font-weight: 500; border-color: #cbd5e1; }
-    .btn-provider:hover { background: #f1f5f9; }
-    .btn-settings { background: #fff; margin-top: 8px; border-style: dashed; }
-    .btn-settings:hover { background: #f8fafc; }
-    small { color: #64748b; display: block; margin: 1px 0 8px 2px; font-size: 11px; }
-    #status { margin-top: 10px; font-size: 12px; line-height: 1.4; color: #334155; }
-    .empty-notice { font-size: 12px; color: #64748b; padding: 8px 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      width: 220px;
+      padding: 10px;
+      margin: 0;
+      color: #1e293b;
+      background: #ffffff;
+      user-select: none;
+    }
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 8px;
+      padding-bottom: 6px;
+      border-bottom: 1px solid #f1f5f9;
+    }
+    .header h3 {
+      margin: 0;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: -0.2px;
+      color: #0f172a;
+    }
+    .btn-provider {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 7px 10px;
+      margin: 4px 0;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 12px;
+      font-weight: 600;
+      transition: filter 0.15s ease, transform 0.05s ease;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.06);
+    }
+    .btn-provider:hover {
+      filter: brightness(0.93);
+    }
+    .btn-provider:active {
+      transform: scale(0.98);
+    }
+    .btn-content {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+    }
+    .btn-content svg {
+      flex-shrink: 0;
+    }
+    .badge {
+      font-size: 10px;
+      font-weight: 500;
+      padding: 1px 5px;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.22);
+      color: inherit;
+    }
+    /* Provider Specific Themes */
+    .btn-claude {
+      background: #d97757;
+      color: #ffffff;
+    }
+    .btn-chatgpt {
+      background: #10a37f;
+      color: #ffffff;
+    }
+    .btn-gemini {
+      background: linear-gradient(135deg, #1a73e8 0%, #7c3aed 100%);
+      color: #ffffff;
+    }
+    .btn-perplexity {
+      background: #194a50;
+      color: #ffffff;
+    }
+    .btn-settings {
+      width: 100%;
+      margin-top: 8px;
+      padding: 5px;
+      background: #f8fafc;
+      color: #64748b;
+      border: 1px solid #e2e8f0;
+      border-radius: 5px;
+      font-size: 11px;
+      font-weight: 500;
+      cursor: pointer;
+    }
+    .btn-settings:hover {
+      background: #f1f5f9;
+      color: #334155;
+    }
+    #status {
+      margin-top: 6px;
+      font-size: 11px;
+      line-height: 1.3;
+      color: #334155;
+      text-align: center;
+    }
   </style>
 </head>
 <body>
-  <h3>Cover Letter Handoff</h3>
+  <div class="header">
+    <h3>Cover Letter Handoff</h3>
+  </div>
 
-  <div id="provider-buttons"></div>
+  <button class="btn-provider btn-claude" id="claude">
+    <span class="btn-content">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C12.5 7.5 16.5 11.5 22 12C16.5 12.5 12.5 16.5 12 22C11.5 16.5 7.5 12.5 2 12C7.5 11.5 11.5 7.5 12 2Z"/></svg>
+      <span>Claude</span>
+    </span>
+    <span class="badge" id="count-claude">0</span>
+  </button>
 
-  <button id="settings" class="btn-settings">⚙️ Settings & AI Websites</button>
+  <button class="btn-provider btn-chatgpt" id="chatgpt">
+    <span class="btn-content">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M22.28 9.82a5.98 5.98 0 0 0-.52-4.91 6.05 6.05 0 0 0-6.51-2.9A6.06 6.06 0 0 0 4.98 4.18a5.98 5.98 0 0 0-4 2.9 6.05 6.05 0 0 0 .74 7.1 5.98 5.98 0 0 0 .51 4.91 6.05 6.05 0 0 0 6.52 2.9A5.98 5.98 0 0 0 13.26 24a6.06 6.06 0 0 0 5.77-4.21 5.99 5.99 0 0 0 4-2.9 6.06 6.06 0 0 0-.75-7.07zm-9.02 12.61a4.48 4.48 0 0 1-2.88-1.04l.14-.08 4.78-2.76a.8.8 0 0 0 .4-.68v-6.74l2.02 1.17a.07.07 0 0 1 .04.05v5.58a4.5 4.5 0 0 1-4.5 4.5zm-9.66-4.13a4.47 4.47 0 0 1-.54-3.01l.15.08 4.78 2.76a.77.77 0 0 0 .78 0l5.84-3.37v2.33a.08.08 0 0 1-.03.06L9.74 19.95a4.5 4.5 0 0 1-6.14-1.65zM2.34 7.9a4.49 4.49 0 0 1 2.37-1.98v5.68a.77.77 0 0 0 .38.68l5.82 3.35-2.02 1.17a.08.08 0 0 1-.07 0l-4.83-2.79A4.5 4.5 0 0 1 2.34 7.9zm16.1 3.85L12.6 8.38l2.02-1.16a.08.08 0 0 1 .07 0l4.83 2.79a4.5 4.5 0 0 1-.68 8.1v-5.67a.79.79 0 0 0-.4-.69zm2.01-3.02l-.14-.08-4.77-2.79a.78.78 0 0 0-.79 0L9.01 9.23V6.9a.07.07 0 0 1 .03-.06l4.83-2.79a4.5 4.5 0 0 1 6.68 4.66zM8.31 12.86l-2.02-1.16a.08.08 0 0 1-.04-.06V6.07a4.5 4.5 0 0 1 7.38-3.45l-.15.08L8.7 5.46a.8.8 0 0 0-.39.68v6.72zm1.14-2.07l2.55-1.47 2.55 1.47v2.94l-2.55 1.46-2.55-1.46z"/></svg>
+      <span>ChatGPT</span>
+    </span>
+    <span class="badge" id="count-chatgpt">0</span>
+  </button>
+
+  <button class="btn-provider btn-gemini" id="gemini">
+    <span class="btn-content">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 24C12 17.37 6.63 12 0 12C6.63 12 12 6.63 12 0C12 6.63 17.37 12 24 12C17.37 12 12 17.37 12 24Z"/></svg>
+      <span>Gemini</span>
+    </span>
+    <span class="badge" id="count-gemini">0</span>
+  </button>
+
+  <button class="btn-provider btn-perplexity" id="perplexity">
+    <span class="btn-content">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a1 1 0 0 1 1 1v4.34l3.07-3.07a1 1 0 0 1 1.41 1.41L14.41 8.75l4.34-1.16a1 1 0 1 1 .52 1.93l-4.7 1.26 3.68 3.68a1 1 0 1 1-1.41 1.41L13.16 12.2l1.16 4.34a1 1 0 1 1-1.93.52l-1.26-4.7-3.68 3.68a1 1 0 0 1-1.41-1.41L8.75 11.5l-4.34 1.16a1 1 0 1 1-.52-1.93l4.7-1.26L4.91 5.79a1 1 0 0 1 1.41-1.41L9.4 7.45 8.24 3.11A1 1 0 0 1 9.21 2h2.79z"/></svg>
+      <span>Perplexity</span>
+    </span>
+    <span class="badge" id="count-perplexity">0</span>
+  </button>
+
+  <button id="settings" class="btn-settings">⚙️ Settings</button>
   <div id="status"></div>
   <script src="popup.js"></script>
 </body>
