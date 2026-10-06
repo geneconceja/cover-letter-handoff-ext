@@ -16,7 +16,7 @@ MY RESUME:
 ${resume}`;
 }
 
-// ---- usage tracking (manual, since free-plan usage can't be read) ----
+// ---- usage tracking ----
 async function bumpCounter(key) {
   const today = new Date().toDateString();
   const k = `count_${key}`;
@@ -25,26 +25,12 @@ async function bumpCounter(key) {
   await chrome.storage.local.set({ [k]: next });
 }
 
-async function markLimited(key) {
-  await chrome.storage.local.set({ [`limited_${key}`]: Date.now() });
-  refresh();
-}
-
 async function refresh() {
-  const { hours = 5 } = await chrome.storage.local.get("hours");
   for (const key of Object.keys(PROVIDERS)) {
-    const store = await chrome.storage.local.get([`count_${key}`, `limited_${key}`]);
+    const store = await chrome.storage.local.get(`count_${key}`);
     const count = store[`count_${key}`];
     const today = count?.day === new Date().toDateString() ? count.n : 0;
-
-    const since = store[`limited_${key}`];
-    const msLeft = since ? since + hours * 3600_000 - Date.now() : 0;
-    const blocked = msLeft > 0;
-
-    $(key).disabled = blocked;
-    $(`info-${key}`).textContent = blocked
-      ? `Limit hit. Back in ~${Math.ceil(msLeft / 60000)} min`
-      : `${today} letter(s) today`;
+    $(`info-${key}`).textContent = `${today} letter(s) today`;
   }
 }
 
@@ -76,8 +62,6 @@ async function handoff(key) {
 
 $("claude").onclick = () => handoff("claude");
 $("chatgpt").onclick = () => handoff("chatgpt");
-$("limit-claude").onclick = () => markLimited("claude");
-$("limit-chatgpt").onclick = () => markLimited("chatgpt");
 $("settings").onclick = () => chrome.runtime.openOptionsPage();
 
 refresh();
