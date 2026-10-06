@@ -18,9 +18,10 @@ Instead of paying for expensive AI job-search subscriptions or manually copying 
 ## Features
 
 - **One-Click Scraping:** Automatically detects and extracts job title, company name, and job description from Indeed and JobStreet postings.
+- **Customizable AI Websites:** Ships with defaults (Claude, ChatGPT, Gemini) and lets you add any AI chat website (Perplexity, DeepSeek, Copilot, Mistral, or local LLMs) with custom names and URLs.
 - **Privacy-First Clipboard Handoff:** Copies your structured prompt directly to your clipboard and opens a clean provider tab—never leaking sensitive resume details into URL query parameters or browser history.
 - **Prompt Injection Hardening:** Encloses scraped web text inside isolated `<job_posting>` XML boundary tags with explicit LLM constraints to prevent adversarial prompts from altering instructions.
-- **Local Storage Only:** Your resume and tone preferences are stored strictly inside your browser's local extension storage (`chrome.storage.local`) and never sent to external third-party servers.
+- **Local Storage Only:** Your resume, preferences, and custom AI list are stored strictly inside your browser's local extension storage (`chrome.storage.local`) and never sent to external servers.
 - **Daily Usage Tracking:** Automatically tracks how many letters you have prepared each day per provider.
 
 ---
@@ -32,8 +33,8 @@ Instead of paying for expensive AI job-search subscriptions or manually copying 
 - **JobStreet** (`*.jobstreet.com`)
 
 ### AI Providers
-- **Claude** (`claude.ai`)
-- **ChatGPT** (`chatgpt.com`)
+- **Built-in Defaults:** Claude (`claude.ai`), ChatGPT (`chatgpt.com`), Google Gemini (`gemini.google.com`)
+- **Custom AI Websites:** Add any website via extension settings (e.g. Perplexity, DeepSeek, Copilot, HuggingChat, or local Ollama/Open WebUI)
 
 ---
 
@@ -59,23 +60,25 @@ Since this is an unpacked extension, you can install it directly in Google Chrom
 
 ### 1. Initial Setup
 1. Click the extension icon in your browser toolbar.
-2. Click **Open settings** (or right-click the extension icon and select **Options**).
+2. Click **⚙️ Settings & AI Websites** (or right-click the extension icon and select **Options**).
 3. Paste your **plain text resume** into the text area.
 4. Select your preferred default tone (`Friendly`, `Formal`, or `Concise`).
-5. Click **Save**.
+5. *(Optional)* Manage your **AI Websites & Providers**:
+   - Built-in defaults include Claude, ChatGPT, and Gemini.
+   - Enter a Name and URL (e.g. `Perplexity` with `https://www.perplexity.ai/`) and click **+ Add AI Website**.
+   - Remove any providers you don't use.
+6. Click **Save Settings**.
 
 ### 2. Generating a Cover Letter
 1. Navigate to any active job listing on **Indeed** or **JobStreet**.
 2. Click the **Cover Letter Handoff** extension icon.
-3. Choose your provider:
-   - Click **Send to Claude**, or
-   - Click **Send to ChatGPT**.
+3. Click your preferred AI button (e.g., **Send to Claude**, **Send to ChatGPT**, **Send to Gemini**, or your custom added AI).
 4. The extension will:
-   - Extract the listing details.
+   - Extract the listing title, company, and description.
    - Assemble the structured prompt with your saved resume.
    - Copy the complete prompt to your system clipboard.
-   - Open a new browser tab with the chosen provider.
-5. In the new Claude or ChatGPT tab, simply press **`Ctrl + V`** (or **`Cmd + V`** on macOS) into the chat box and hit Enter!
+   - Open a new browser tab with your selected AI website.
+5. In the opened AI chat tab, simply press **`Ctrl + V`** (or **`Cmd + V`** on macOS) into the input box and press Enter!
 
 ---
 
