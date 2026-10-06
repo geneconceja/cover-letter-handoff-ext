@@ -1,6 +1,6 @@
 const PROVIDERS = {
-  claude:  { name: "Claude",  url: "https://claude.ai/new?q=" },
-  chatgpt: { name: "ChatGPT", url: "https://chatgpt.com/?q=" }
+  claude:  { name: "Claude",  url: "https://claude.ai/new" },
+  chatgpt: { name: "ChatGPT", url: "https://chatgpt.com/" }
 };
 const $ = (id) => document.getElementById(id);
 const status = (t) => ($("status").textContent = t);
@@ -45,15 +45,12 @@ async function handoff(key) {
     if (!job?.description) return status("Couldn't read the job. Is a listing open?");
 
     const prompt = buildPrompt(job, resume, tone);
-    await navigator.clipboard.writeText(prompt); // always-works fallback
-
-    const url = PROVIDERS[key].url + encodeURIComponent(prompt);
-    const prefilled = url.length < 6000;
-    chrome.tabs.create({ url: prefilled ? url : PROVIDERS[key].url.split("?")[0] });
+    await navigator.clipboard.writeText(prompt);
+    chrome.tabs.create({ url: PROVIDERS[key].url });
 
     await bumpCounter(key);
     refresh();
-    status(prefilled ? "Opened with prompt prefilled (also copied)." : "Prompt copied. Paste it in the new tab.");
+    status("Prompt copied! Paste it in the new tab (Ctrl+V / Cmd+V).");
   } catch (e) {
     // Usually: content script not loaded (refresh the job page) or not on a supported site
     status("Error: " + e.message + ". Try refreshing the job page.");
