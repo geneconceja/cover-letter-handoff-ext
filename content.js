@@ -13,6 +13,5 @@ chrome.runtime.onMessage.addListener((msg, _sender, sendResponse) => {
   // Fallback: if the description selector failed, send the page text instead
   if (!job.description) job.description = document.body.innerText.slice(0, 6000);
 
-  console.log("[CoverLetterExt] scraped:", job);
   sendResponse(job);
 });

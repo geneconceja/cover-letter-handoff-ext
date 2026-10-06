@@ -43,9 +43,25 @@ async function refresh() {
 }
 
 // ---- main handoff ----
+const SUPPORTED_DOMAINS = ["jobstreet.com", "indeed.com"];
+
 async function handoff(key) {
   try {
     const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+    if (!tab?.url) return status("No active tab detected.");
+
+    const isSupported = SUPPORTED_DOMAINS.some((domain) => {
+      try {
+        return new URL(tab.url).hostname.includes(domain);
+      } catch {
+        return false;
+      }
+    });
+
+    if (!isSupported) {
+      return status("Please open an Indeed or JobStreet job posting.");
+    }
+
     const job = await chrome.tabs.sendMessage(tab.id, { type: "GET_JOB" });
     const { resume = "", tone = "friendly" } = await chrome.storage.local.get(["resume", "tone"]);
 
