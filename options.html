@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Cover Letter Settings</title>
+  <style>
+    body { font-family: system-ui, sans-serif; max-width: 700px; margin: 24px auto; padding: 0 16px; }
+    textarea { width: 100%; height: 300px; }
+    label { display: block; margin-top: 16px; font-weight: 600; }
+    button { margin-top: 16px; padding: 8px 16px; }
+  </style>
+</head>
+<body>
+  <h2>Settings</h2>
+  <label for="resume">Your resume (plain text)</label>
+  <textarea id="resume"></textarea>
+
+  <label for="tone">Tone</label>
+  <select id="tone">
+    <option value="friendly">Friendly</option>
+    <option value="formal">Formal</option>
+    <option value="concise">Concise</option>
+  </select>
+
+  <label for="hours">Hours before a "limit reached" provider re-enables</label>
+  <input id="hours" type="number" min="1" value="5">
+
+  <br><button id="save">Save</button> <span id="msg"></span>
+  <script src="options.js"></script>
+</body>
+</html>

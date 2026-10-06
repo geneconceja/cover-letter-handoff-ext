@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <style>
+    body { font-family: system-ui, sans-serif; width: 280px; padding: 12px; }
+    button { width: 100%; padding: 8px; margin: 4px 0; cursor: pointer; }
+    button:disabled { opacity: .5; cursor: not-allowed; }
+    .row { display: flex; gap: 6px; }
+    .row .main { flex: 1; }
+    .row .limit { width: auto; font-size: 11px; }
+    small { color: #666; display: block; margin: 2px 0 8px; }
+    #status { margin-top: 10px; font-size: 13px; }
+  </style>
+</head>
+<body>
+  <h3 style="margin:0 0 8px">Cover Letter</h3>
+
+  <div class="row">
+    <button class="main" id="claude">Send to Claude</button>
+    <button class="limit" id="limit-claude" title="I hit my limit">Limit hit</button>
+  </div>
+  <small id="info-claude"></small>
+
+  <div class="row">
+    <button class="main" id="chatgpt">Send to ChatGPT</button>
+    <button class="limit" id="limit-chatgpt" title="I hit my limit">Limit hit</button>
+  </div>
+  <small id="info-chatgpt"></small>
+
+  <button id="settings">Open settings</button>
+  <div id="status"></div>
+  <script src="popup.js"></script>
+</body>
+</html>
