@@ -18,7 +18,7 @@ Instead of paying for expensive AI job-search subscriptions or manually copying 
 ## Features
 
 - **One-Click Scraping:** Automatically detects and extracts job title, company name, and job description from Indeed and JobStreet postings.
-- **Themed AI Provider Buttons:** Compact, branded buttons with authentic app colors and vector SVG icons for **Claude**, **ChatGPT**, **Gemini**, and **Perplexity**.
+- **Themed AI Provider Buttons:** Compact, branded buttons with authentic app colors and vector SVG icons for **Claude**, **ChatGPT**, **Gemini**, **DeepSeek**, and **Perplexity**.
 - **Compact & Lightweight UI:** Ultra-compact toolbar popup designed for speed with minimal vertical footprint.
 - **Privacy-First Clipboard Handoff:** Copies your structured prompt directly to your clipboard and opens a clean provider tab—never leaking sensitive resume details into URL query parameters or browser history.
 - **Prompt Injection Hardening:** Encloses scraped web text inside isolated `<job_posting>` XML boundary tags with explicit LLM constraints to prevent adversarial prompts from altering instructions.
@@ -37,6 +37,7 @@ Instead of paying for expensive AI job-search subscriptions or manually copying 
 - **Claude** (`claude.ai`) — Anthropic terracotta theme
 - **ChatGPT** (`chatgpt.com`) — OpenAI emerald theme
 - **Google Gemini** (`gemini.google.com`) — Google gradient theme
+- **DeepSeek** (`chat.deepseek.com`) — DeepSeek cobalt blue theme
 - **Perplexity** (`perplexity.ai`) — Perplexity deep teal theme
 
 ---
@@ -71,7 +72,7 @@ Since this is an unpacked extension, you can install it directly in Google Chrom
 ### 2. Generating a Cover Letter
 1. Navigate to any active job listing on **Indeed** or **JobStreet**.
 2. Click the **Cover Letter Handoff** extension icon.
-3. Click any AI provider button (**Claude**, **ChatGPT**, **Gemini**, or **Perplexity**).
+3. Click any AI provider button (**Claude**, **ChatGPT**, **Gemini**, **DeepSeek**, or **Perplexity**).
 4. The extension will:
    - Extract the listing title, company, and description.
    - Assemble the structured prompt with your saved resume.
