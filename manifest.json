@@ -1,9 +1,13 @@
 {
   "manifest_version": 3,
   "name": "Cover Letter Handoff",
+  "description": "Generate tailored cover letters by handing off job listings and your resume to Claude or ChatGPT.",
   "version": "1.0",
   "permissions": ["storage", "activeTab", "clipboardWrite"],
-  "action": { "default_popup": "popup.html" },
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Cover Letter Handoff"
+  },
   "options_page": "options.html",
   "content_scripts": [{
     "matches": ["https://*.jobstreet.com/*", "https://*.indeed.com/*"],
