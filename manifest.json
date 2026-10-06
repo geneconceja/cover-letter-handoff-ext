@@ -3,10 +3,20 @@
   "name": "Cover Letter Handoff",
   "description": "Generate tailored cover letters by handing off job listings and your resume to Claude or ChatGPT.",
   "version": "1.0",
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
   "permissions": ["storage", "activeTab", "clipboardWrite"],
   "action": {
     "default_popup": "popup.html",
-    "default_title": "Cover Letter Handoff"
+    "default_title": "Cover Letter Handoff",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
   },
   "options_page": "options.html",
   "content_scripts": [{

@@ -95,6 +95,7 @@ Since this is an unpacked extension, you can install it directly in Google Chrom
 
 ```text
 cover-letter-generator-ext/
+├── icons/              # Extension icons (16px, 48px, 128px)
 ├── manifest.json       # Extension manifest (Manifest V3)
 ├── content.js          # Content script for scraping Indeed and JobStreet
 ├── popup.html          # Toolbar popup UI
