@@ -1,7 +1,9 @@
-const PROVIDERS = {
-  claude:  { name: "Claude",  url: "https://claude.ai/new" },
-  chatgpt: { name: "ChatGPT", url: "https://chatgpt.com/" }
-};
+const DEFAULT_PROVIDERS = [
+  { id: "claude", name: "Claude", url: "https://claude.ai/new" },
+  { id: "chatgpt", name: "ChatGPT", url: "https://chatgpt.com/" },
+  { id: "gemini", name: "Gemini", url: "https://gemini.google.com/app" }
+];
+
 const $ = (id) => document.getElementById(id);
 const status = (t) => ($("status").textContent = t);
 
@@ -33,19 +35,10 @@ async function bumpCounter(key) {
   await chrome.storage.local.set({ [k]: next });
 }
 
-async function refresh() {
-  for (const key of Object.keys(PROVIDERS)) {
-    const store = await chrome.storage.local.get(`count_${key}`);
-    const count = store[`count_${key}`];
-    const today = count?.day === new Date().toDateString() ? count.n : 0;
-    $(`info-${key}`).textContent = `${today} letter(s) today`;
-  }
-}
-
 // ---- main handoff ----
 const SUPPORTED_DOMAINS = ["jobstreet.com", "indeed.com"];
 
-async function handoff(key) {
+async function handoff(provider) {
   try {
     const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
     if (!tab?.url) return status("No active tab detected.");
@@ -70,19 +63,47 @@ async function handoff(key) {
 
     const prompt = buildPrompt(job, resume, tone);
     await navigator.clipboard.writeText(prompt);
-    chrome.tabs.create({ url: PROVIDERS[key].url });
+    chrome.tabs.create({ url: provider.url });
 
-    await bumpCounter(key);
-    refresh();
-    status("Prompt copied! Paste it in the new tab (Ctrl+V / Cmd+V).");
+    await bumpCounter(provider.id);
+    await renderProviderButtons();
+    status(`Prompt copied! Paste it in the ${provider.name} tab (Ctrl+V / Cmd+V).`);
   } catch (e) {
-    // Usually: content script not loaded (refresh the job page) or not on a supported site
     status("Error: " + e.message + ". Try refreshing the job page.");
   }
 }
 
-$("claude").onclick = () => handoff("claude");
-$("chatgpt").onclick = () => handoff("chatgpt");
+async function renderProviderButtons() {
+  const container = $("provider-buttons");
+  container.innerHTML = "";
+
+  const store = await chrome.storage.local.get("providers");
+  const providers = store.providers && store.providers.length > 0 ? store.providers : DEFAULT_PROVIDERS;
+
+  if (providers.length === 0) {
+    container.innerHTML = `<div class="empty-notice">No AI websites configured.<br>Click "Settings" below to add one.</div>`;
+    return;
+  }
+
+  for (const provider of providers) {
+    const countKey = `count_${provider.id}`;
+    const countStore = await chrome.storage.local.get(countKey);
+    const count = countStore[countKey];
+    const today = count?.day === new Date().toDateString() ? count.n : 0;
+
+    const btn = document.createElement("button");
+    btn.className = "btn-provider";
+    btn.textContent = `Send to ${provider.name}`;
+    btn.onclick = () => handoff(provider);
+
+    const info = document.createElement("small");
+    info.textContent = `${today} letter(s) today`;
+
+    container.appendChild(btn);
+    container.appendChild(info);
+  }
+}
+
 $("settings").onclick = () => chrome.runtime.openOptionsPage();
 
-refresh();
+renderProviderButtons();
