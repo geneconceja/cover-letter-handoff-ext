@@ -4,6 +4,17 @@ A privacy-focused Chrome Extension (Manifest V3) that extracts job postings from
 
 ---
 
+## Why I Built This
+
+I built this extension because I got tired of constantly switching back and forth between job posting websites and AI tools just to craft tailored cover letters. 
+
+Instead of paying for expensive AI job-search subscriptions or manually copying and pasting job descriptions, requirements, and resume details every single time, I wanted a simple, free, and helpful handoff tool:
+- Grab the job listing with one click.
+- Combine it seamlessly with my saved resume.
+- Copy a polished prompt to the clipboard and launch the AI web app ready to paste (`Ctrl + V`).
+
+---
+
 ## Features
 
 - **One-Click Scraping:** Automatically detects and extracts job title, company name, and job description from Indeed and JobStreet postings.
