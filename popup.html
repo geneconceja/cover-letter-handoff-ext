@@ -3,30 +3,102 @@
 <head>
   <meta charset="utf-8">
   <style>
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      width: 220px;
-      padding: 10px;
-      margin: 0;
-      color: #1e293b;
-      background: #ffffff;
-      user-select: none;
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700&display=swap');
+
+    :root {
+      --bg: #ffffff;
+      --fg: #09090b;
+      --muted: #71717a;
+      --border: #e4e4e7;
+      --card-bg: #ffffff;
+      --card-fg: #09090b;
+      --card-border: #e4e4e7;
+      --card-hover-bg: #09090b;
+      --card-hover-fg: #ffffff;
+      --card-hover-border: #09090b;
+      --badge-bg: #f4f4f5;
+      --badge-fg: #71717a;
+      --badge-hover-bg: #27272a;
+      --badge-hover-fg: #e4e4e7;
+      --settings-bg: #fafafa;
+      --settings-hover: #f4f4f5;
+      --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.04);
+      --shadow-hover: 0 4px 12px -2px rgba(0, 0, 0, 0.12);
     }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #09090b;
+        --fg: #fafafa;
+        --muted: #a1a1aa;
+        --border: #27272a;
+        --card-bg: #141417;
+        --card-fg: #fafafa;
+        --card-border: #27272a;
+        --card-hover-bg: #ffffff;
+        --card-hover-fg: #09090b;
+        --card-hover-border: #ffffff;
+        --badge-bg: #27272a;
+        --badge-fg: #a1a1aa;
+        --badge-hover-bg: #e4e4e7;
+        --badge-hover-fg: #18181b;
+        --settings-bg: #141417;
+        --settings-hover: #27272a;
+        --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+        --shadow-hover: 0 4px 14px -2px rgba(255, 255, 255, 0.12);
+      }
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: "Plus Jakarta Sans", "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      width: 216px;
+      padding: 10px;
+      color: var(--fg);
+      background: var(--bg);
+      user-select: none;
+      -webkit-font-smoothing: antialiased;
+      letter-spacing: -0.2px;
+    }
+
     .header {
       display: flex;
       align-items: center;
       justify-content: space-between;
       margin-bottom: 8px;
       padding-bottom: 6px;
-      border-bottom: 1px solid #f1f5f9;
+      border-bottom: 1px solid var(--border);
     }
-    .header h3 {
-      margin: 0;
-      font-size: 13px;
+
+    .header-title {
+      font-size: 12px;
       font-weight: 700;
-      letter-spacing: -0.2px;
-      color: #0f172a;
+      letter-spacing: -0.3px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
     }
+
+    .dot {
+      width: 6px;
+      height: 6px;
+      background: var(--fg);
+      border-radius: 50%;
+      display: inline-block;
+    }
+
+    .version-tag {
+      font-size: 9px;
+      font-weight: 600;
+      color: var(--muted);
+      letter-spacing: 0.2px;
+    }
+
     .btn-provider {
       width: 100%;
       display: flex;
@@ -34,128 +106,157 @@
       justify-content: space-between;
       padding: 7px 10px;
       margin: 4px 0;
-      border: none;
+      background: var(--card-bg);
+      color: var(--card-fg);
+      border: 1px solid var(--card-border);
       border-radius: 6px;
       cursor: pointer;
+      font-family: inherit;
       font-size: 12px;
       font-weight: 600;
-      transition: filter 0.15s ease, transform 0.05s ease;
-      box-shadow: 0 1px 2px rgba(0,0,0,0.06);
+      letter-spacing: -0.2px;
+      transition: all 0.16s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: var(--shadow-sm);
     }
+
     .btn-provider:hover {
-      filter: brightness(0.93);
+      background: var(--card-hover-bg);
+      color: var(--card-hover-fg);
+      border-color: var(--card-hover-border);
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-hover);
     }
+
     .btn-provider:active {
-      transform: scale(0.98);
+      transform: translateY(0);
+      filter: brightness(0.95);
     }
+
     .btn-content {
       display: flex;
       align-items: center;
-      gap: 7px;
+      gap: 8px;
     }
+
     .btn-content svg {
       flex-shrink: 0;
+      fill: currentColor;
+      transition: transform 0.16s ease;
     }
+
+    .btn-provider:hover .btn-content svg {
+      transform: scale(1.08);
+    }
+
     .badge {
       font-size: 10px;
-      font-weight: 500;
-      padding: 1px 5px;
+      font-weight: 600;
+      padding: 1px 6px;
       border-radius: 10px;
-      background: rgba(255, 255, 255, 0.22);
-      color: inherit;
+      background: var(--badge-bg);
+      color: var(--badge-fg);
+      border: 1px solid var(--card-border);
+      transition: all 0.16s ease;
+      font-feature-settings: "tnum";
+      font-variant-numeric: tabular-nums;
     }
-    /* Provider Specific Themes */
-    .btn-claude {
-      background: #d97757;
-      color: #ffffff;
+
+    .btn-provider:hover .badge {
+      background: var(--badge-hover-bg);
+      color: var(--badge-hover-fg);
+      border-color: transparent;
     }
-    .btn-chatgpt {
-      background: #10a37f;
-      color: #ffffff;
-    }
-    .btn-gemini {
-      background: linear-gradient(135deg, #1a73e8 0%, #7c3aed 100%);
-      color: #ffffff;
-    }
-    .btn-deepseek {
-      background: #1d63ed;
-      color: #ffffff;
-    }
-    .btn-perplexity {
-      background: #194a50;
-      color: #ffffff;
-    }
+
     .btn-settings {
       width: 100%;
       margin-top: 8px;
-      padding: 5px;
-      background: #f8fafc;
-      color: #64748b;
-      border: 1px solid #e2e8f0;
-      border-radius: 5px;
+      padding: 5px 8px;
+      background: var(--settings-bg);
+      color: var(--muted);
+      border: 1px dashed var(--border);
+      border-radius: 6px;
+      font-family: inherit;
       font-size: 11px;
       font-weight: 500;
       cursor: pointer;
+      transition: all 0.15s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
     }
+
     .btn-settings:hover {
-      background: #f1f5f9;
-      color: #334155;
+      background: var(--settings-hover);
+      color: var(--fg);
+      border-style: solid;
+      border-color: var(--fg);
     }
+
     #status {
       margin-top: 6px;
-      font-size: 11px;
-      line-height: 1.3;
-      color: #334155;
+      font-size: 10.5px;
+      font-weight: 500;
+      line-height: 1.35;
+      color: var(--muted);
       text-align: center;
+      min-height: 14px;
     }
   </style>
 </head>
 <body>
   <div class="header">
-    <h3>Cover Letter Handoff</h3>
+    <div class="header-title">
+      <span class="dot"></span>
+      <span>Cover Letter</span>
+    </div>
+    <span class="version-tag">HANDOFF</span>
   </div>
 
-  <button class="btn-provider btn-claude" id="claude">
+  <button class="btn-provider" id="claude">
     <span class="btn-content">
-      <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C12.5 7.5 16.5 11.5 22 12C16.5 12.5 12.5 16.5 12 22C11.5 16.5 7.5 12.5 2 12C7.5 11.5 11.5 7.5 12 2Z"/></svg>
+      <svg width="14" height="14" viewBox="0 0 24 24"><path d="M12 2C12.5 7.5 16.5 11.5 22 12C16.5 12.5 12.5 16.5 12 22C11.5 16.5 7.5 12.5 2 12C7.5 11.5 11.5 7.5 12 2Z"/></svg>
       <span>Claude</span>
     </span>
     <span class="badge" id="count-claude">0</span>
   </button>
 
-  <button class="btn-provider btn-chatgpt" id="chatgpt">
+  <button class="btn-provider" id="chatgpt">
     <span class="btn-content">
-      <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M22.28 9.82a5.98 5.98 0 0 0-.52-4.91 6.05 6.05 0 0 0-6.51-2.9A6.06 6.06 0 0 0 4.98 4.18a5.98 5.98 0 0 0-4 2.9 6.05 6.05 0 0 0 .74 7.1 5.98 5.98 0 0 0 .51 4.91 6.05 6.05 0 0 0 6.52 2.9A5.98 5.98 0 0 0 13.26 24a6.06 6.06 0 0 0 5.77-4.21 5.99 5.99 0 0 0 4-2.9 6.06 6.06 0 0 0-.75-7.07zm-9.02 12.61a4.48 4.48 0 0 1-2.88-1.04l.14-.08 4.78-2.76a.8.8 0 0 0 .4-.68v-6.74l2.02 1.17a.07.07 0 0 1 .04.05v5.58a4.5 4.5 0 0 1-4.5 4.5zm-9.66-4.13a4.47 4.47 0 0 1-.54-3.01l.15.08 4.78 2.76a.77.77 0 0 0 .78 0l5.84-3.37v2.33a.08.08 0 0 1-.03.06L9.74 19.95a4.5 4.5 0 0 1-6.14-1.65zM2.34 7.9a4.49 4.49 0 0 1 2.37-1.98v5.68a.77.77 0 0 0 .38.68l5.82 3.35-2.02 1.17a.08.08 0 0 1-.07 0l-4.83-2.79A4.5 4.5 0 0 1 2.34 7.9zm16.1 3.85L12.6 8.38l2.02-1.16a.08.08 0 0 1 .07 0l4.83 2.79a4.5 4.5 0 0 1-.68 8.1v-5.67a.79.79 0 0 0-.4-.69zm2.01-3.02l-.14-.08-4.77-2.79a.78.78 0 0 0-.79 0L9.01 9.23V6.9a.07.07 0 0 1 .03-.06l4.83-2.79a4.5 4.5 0 0 1 6.68 4.66zM8.31 12.86l-2.02-1.16a.08.08 0 0 1-.04-.06V6.07a4.5 4.5 0 0 1 7.38-3.45l-.15.08L8.7 5.46a.8.8 0 0 0-.39.68v6.72zm1.14-2.07l2.55-1.47 2.55 1.47v2.94l-2.55 1.46-2.55-1.46z"/></svg>
+      <svg width="14" height="14" viewBox="0 0 24 24"><path d="M22.28 9.82a5.98 5.98 0 0 0-.52-4.91 6.05 6.05 0 0 0-6.51-2.9A6.06 6.06 0 0 0 4.98 4.18a5.98 5.98 0 0 0-4 2.9 6.05 6.05 0 0 0 .74 7.1 5.98 5.98 0 0 0 .51 4.91 6.05 6.05 0 0 0 6.52 2.9A5.98 5.98 0 0 0 13.26 24a6.06 6.06 0 0 0 5.77-4.21 5.99 5.99 0 0 0 4-2.9 6.06 6.06 0 0 0-.75-7.07zm-9.02 12.61a4.48 4.48 0 0 1-2.88-1.04l.14-.08 4.78-2.76a.8.8 0 0 0 .4-.68v-6.74l2.02 1.17a.07.07 0 0 1 .04.05v5.58a4.5 4.5 0 0 1-4.5 4.5zm-9.66-4.13a4.47 4.47 0 0 1-.54-3.01l.15.08 4.78 2.76a.77.77 0 0 0 .78 0l5.84-3.37v2.33a.08.08 0 0 1-.03.06L9.74 19.95a4.5 4.5 0 0 1-6.14-1.65zM2.34 7.9a4.49 4.49 0 0 1 2.37-1.98v5.68a.77.77 0 0 0 .38.68l5.82 3.35-2.02 1.17a.08.08 0 0 1-.07 0l-4.83-2.79A4.5 4.5 0 0 1 2.34 7.9zm16.1 3.85L12.6 8.38l2.02-1.16a.08.08 0 0 1 .07 0l4.83 2.79a4.5 4.5 0 0 1-.68 8.1v-5.67a.79.79 0 0 0-.4-.69zm2.01-3.02l-.14-.08-4.77-2.79a.78.78 0 0 0-.79 0L9.01 9.23V6.9a.07.07 0 0 1 .03-.06l4.83-2.79a4.5 4.5 0 0 1 6.68 4.66zM8.31 12.86l-2.02-1.16a.08.08 0 0 1-.04-.06V6.07a4.5 4.5 0 0 1 7.38-3.45l-.15.08L8.7 5.46a.8.8 0 0 0-.39.68v6.72zm1.14-2.07l2.55-1.47 2.55 1.47v2.94l-2.55 1.46-2.55-1.46z"/></svg>
       <span>ChatGPT</span>
     </span>
     <span class="badge" id="count-chatgpt">0</span>
   </button>
 
-  <button class="btn-provider btn-gemini" id="gemini">
+  <button class="btn-provider" id="gemini">
     <span class="btn-content">
-      <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 24C12 17.37 6.63 12 0 12C6.63 12 12 6.63 12 0C12 6.63 17.37 12 24 12C17.37 12 12 17.37 12 24Z"/></svg>
+      <svg width="14" height="14" viewBox="0 0 24 24"><path d="M12 24C12 17.37 6.63 12 0 12C6.63 12 12 6.63 12 0C12 6.63 17.37 12 24 12C17.37 12 12 17.37 12 24Z"/></svg>
       <span>Gemini</span>
     </span>
     <span class="badge" id="count-gemini">0</span>
   </button>
 
-  <button class="btn-provider btn-deepseek" id="deepseek">
+  <button class="btn-provider" id="deepseek">
     <span class="btn-content">
-      <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3C6.5 3 2 7.2 2 12.3c0 2.8 1.4 5.3 3.6 7 1.8 1.4 4.1 2.2 6.4 2.2 5.5 0 10-4.2 10-9.3 0-.6-.1-1.3-.2-1.9l1.8-1.5c.4-.3.4-.9.1-1.3s-.9-.4-1.3-.1l-1.9 1.5C18.8 5.6 15.6 3 12 3zm-4 8c-.8 0-1.5-.7-1.5-1.5S7.2 8 8 8s1.5.7 1.5 1.5S8.8 11 8 11zm9.5 3.5c-1.8 1.8-4.3 2.7-6.8 2.5-1.1-.1-2.1-.5-3-1.1-.4-.3-.5-.9-.2-1.3.3-.4.9-.5 1.3-.2.7.5 1.5.8 2.3.9 2 .2 4-.5 5.5-1.9.4-.4 1-.3 1.4.1.3.4.3 1-.1 1.4z"/></svg>
+      <svg width="14" height="14" viewBox="0 0 24 24"><path d="M12 3C6.5 3 2 7.2 2 12.3c0 2.8 1.4 5.3 3.6 7 1.8 1.4 4.1 2.2 6.4 2.2 5.5 0 10-4.2 10-9.3 0-.6-.1-1.3-.2-1.9l1.8-1.5c.4-.3.4-.9.1-1.3s-.9-.4-1.3-.1l-1.9 1.5C18.8 5.6 15.6 3 12 3zm-4 8c-.8 0-1.5-.7-1.5-1.5S7.2 8 8 8s1.5.7 1.5 1.5S8.8 11 8 11zm9.5 3.5c-1.8 1.8-4.3 2.7-6.8 2.5-1.1-.1-2.1-.5-3-1.1-.4-.3-.5-.9-.2-1.3.3-.4.9-.5 1.3-.2.7.5 1.5.8 2.3.9 2 .2 4-.5 5.5-1.9.4-.4 1-.3 1.4.1.3.4.3 1-.1 1.4z"/></svg>
       <span>DeepSeek</span>
     </span>
     <span class="badge" id="count-deepseek">0</span>
   </button>
 
-  <button class="btn-provider btn-perplexity" id="perplexity">
+  <button class="btn-provider" id="perplexity">
     <span class="btn-content">
-      <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a1 1 0 0 1 1 1v4.34l3.07-3.07a1 1 0 0 1 1.41 1.41L14.41 8.75l4.34-1.16a1 1 0 1 1 .52 1.93l-4.7 1.26 3.68 3.68a1 1 0 1 1-1.41 1.41L13.16 12.2l1.16 4.34a1 1 0 1 1-1.93.52l-1.26-4.7-3.68 3.68a1 1 0 0 1-1.41-1.41L8.75 11.5l-4.34 1.16a1 1 0 1 1-.52-1.93l4.7-1.26L4.91 5.79a1 1 0 0 1 1.41-1.41L9.4 7.45 8.24 3.11A1 1 0 0 1 9.21 2h2.79z"/></svg>
+      <svg width="14" height="14" viewBox="0 0 24 24"><path d="M12 2a1 1 0 0 1 1 1v4.34l3.07-3.07a1 1 0 0 1 1.41 1.41L14.41 8.75l4.34-1.16a1 1 0 1 1 .52 1.93l-4.7 1.26 3.68 3.68a1 1 0 1 1-1.41 1.41L13.16 12.2l1.16 4.34a1 1 0 1 1-1.93.52l-1.26-4.7-3.68 3.68a1 1 0 0 1-1.41-1.41L8.75 11.5l-4.34 1.16a1 1 0 1 1-.52-1.93l4.7-1.26L4.91 5.79a1 1 0 0 1 1.41-1.41L9.4 7.45 8.24 3.11A1 1 0 0 1 9.21 2h2.79z"/></svg>
       <span>Perplexity</span>
     </span>
     <span class="badge" id="count-perplexity">0</span>
   </button>
 
-  <button id="settings" class="btn-settings">⚙️ Settings</button>
+  <button id="settings" class="btn-settings">
+    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+    <span>Settings</span>
+  </button>
   <div id="status"></div>
   <script src="popup.js"></script>
 </body>

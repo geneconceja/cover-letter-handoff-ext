@@ -18,8 +18,9 @@ Instead of paying for expensive AI job-search subscriptions or manually copying 
 ## Features
 
 - **One-Click Scraping:** Automatically detects and extracts job title, company name, and job description from Indeed and JobStreet postings.
-- **Themed AI Provider Buttons:** Compact, branded buttons with authentic app colors and vector SVG icons for **Claude**, **ChatGPT**, **Gemini**, **DeepSeek**, and **Perplexity**.
-- **Compact & Lightweight UI:** Ultra-compact toolbar popup designed for speed with minimal vertical footprint.
+- **Minimalist B&W Aesthetic:** Stark monochrome design featuring fluid button inversions and high-contrast vector brand icons for **Claude**, **ChatGPT**, **Gemini**, **DeepSeek**, and **Perplexity**.
+- **Modern Typography:** Styled with **Plus Jakarta Sans** for crisp, geometric readability.
+- **Compact & Lightweight UI:** Ultra-compact 216px toolbar popup designed for speed with minimal vertical footprint.
 - **Privacy-First Clipboard Handoff:** Copies your structured prompt directly to your clipboard and opens a clean provider tab—never leaking sensitive resume details into URL query parameters or browser history.
 - **Prompt Injection Hardening:** Encloses scraped web text inside isolated `<job_posting>` XML boundary tags with explicit LLM constraints to prevent adversarial prompts from altering instructions.
 - **Local Storage Only:** Your resume and tone preferences are stored strictly inside your browser's local extension storage (`chrome.storage.local`) and never sent to external servers.
@@ -34,11 +35,11 @@ Instead of paying for expensive AI job-search subscriptions or manually copying 
 - **JobStreet** (`*.jobstreet.com`)
 
 ### AI Providers
-- **Claude** (`claude.ai`) — Anthropic terracotta theme
-- **ChatGPT** (`chatgpt.com`) — OpenAI emerald theme
-- **Google Gemini** (`gemini.google.com`) — Google gradient theme
-- **DeepSeek** (`chat.deepseek.com`) — DeepSeek cobalt blue theme
-- **Perplexity** (`perplexity.ai`) — Perplexity deep teal theme
+- **Claude** (`claude.ai`)
+- **ChatGPT** (`chatgpt.com`)
+- **Google Gemini** (`gemini.google.com`)
+- **DeepSeek** (`chat.deepseek.com`)
+- **Perplexity** (`perplexity.ai`)
 
 ---
 
